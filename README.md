@@ -33,8 +33,6 @@ If you use other ports / names / settings, you have to substitute in the command
     - `ssh`: contains a public and private key pair called `id_rsa` and `id_rsa.pub` (can be generated with `ssh-keygen`)
     - `simulation`: contains the unity application; the executable is directly below this (whole path to it: `data/simulation/ManipulatorEnvironment_Linux.x86_64`)
 
-## Requirements
-
 ## Containers and Images
 ### agent
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
@@ -61,3 +59,15 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 
 - Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
 - Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation ctonic/simulation "bash" "-c" "sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+
+## How to run
+
+- Adapt the commands above with your settings / naming / ports etc.
+- Build the required images
+    - For `acrobot-unity`: `agent`, `simulation` and `ws-bridge`
+    - For OpenAi Gym: `agent-vnc`
+- Run in the correct order, for `acrobot-unity`:
+    1. Run `c_ws_bridge`
+    2. Run `c_simulation`
+    3. Optional: Connect to `c_simulation` via VNC from you client
+    4. Run `agent`
