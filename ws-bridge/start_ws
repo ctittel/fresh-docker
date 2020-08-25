@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# make sure SSH server is running
+/usr/sbin/sshd
+
 source /opt/ros/kinetic/setup.bash
 echo Starting roscore
 roscore& sleep 5
