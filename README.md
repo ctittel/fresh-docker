@@ -12,4 +12,4 @@ Used ports:
 
 ### simulator
 - `docker build -t ctonic/nvidia-vnc https://github.com/ctonic/fresh-docker.git#:simulator`
-- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulator:/data -p 5900:5900 --name c_simulator ctonic/nvidia-vnc "bash" "-c" "sleep 5 && ./data/ManipulatorEnvironment_Linux.x86_64"`
+- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulator:/data -p 5900:5900 --name c_simulator ctonic/nvidia-vnc "bash" "-c" "ssh -o StrictHostKeyChecking=no -4 -N -T -L 9090:localhost:9090 root@c_ws_bridge& sleep 5 && ./data/ManipulatorEnvironment_Linux.x86_64"`
