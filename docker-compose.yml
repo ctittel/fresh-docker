@@ -3,10 +3,14 @@ version: '3'
 services:
   ws-bridge:
     image: ctonic/ws-bridge
-    build: https://github.com/ctonic/Docker-ROS-ws-bridge.git
+    build: ./ws-bridge
   nvidia-vnc:
     image: ctonic/nvidia-vnc
-    build: https://github.com/ctonic/Docker-nvidia-vnc-xvfb.git
+    build: ./simulator
   agent:
     
-
+  
+networks:
+  default:
+    external:
+      name: c_network
