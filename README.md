@@ -44,8 +44,8 @@ Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the 
 Builds on top of the agent container and also contains vnc applications.
 This is useful if you want to see the OpenAi window via vnc (for training and viewing the Unity simulation use `agent` and `simulation`).
 
-- Building: `docker build -t ctonic/agent https://github.com/ctonic/fresh-docker.git#:agent-vnc`
-- Running: `docker run --rm --network c_network -it -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
+- Building: `docker build -t ctonic/agent-vnc https://github.com/ctonic/fresh-docker.git#:agent-vnc`
+- Running: `docker run --rm --network c_network -it -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent-vnc bash -c "cd agent && python main.py"`
 
 ### ws-bridge
 When training the Unity robot this must be run first.
