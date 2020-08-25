@@ -17,7 +17,7 @@ These are the ports, names and settings that are used in the given commands.
 If you use other ports / names / settings, you have to substitute in the commands below.
 
 ### Ports
-- VNC: 5900 (transfered to host server)
+- VNC: Uses Port `5900`, which is exposed to the host server
 - other networking happening is SSH (port 22) and the ROS bridge (9090), but this happens in a self-contained network
 
 ### Container / Variable names
