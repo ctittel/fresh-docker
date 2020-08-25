@@ -3,7 +3,7 @@
 ## Build commands
 ### ws-bridge
 - `docker build --tag ctonic/ws-bridge https://github.com/ctonic/fresh-docker.git#:ws-bridge`
-- `docker run -dit --rm --gpus '"device=0"' -p 9090:9090 --name c_ws_bridge ctonic/ws-bridge`
+- `docker run -dit --rm --gpus '"device=0"' -p 33:22 -p 9090:9090 --name c_ws_bridge ctonic/ws-bridge`
 
 ### simulator
 - `docker build -t ctonic/nvidia-vnc https://github.com/ctonic/fresh-docker.git#:simulator`
