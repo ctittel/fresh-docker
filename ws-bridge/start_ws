@@ -1,11 +1,4 @@
 #!/bin/bash
-
-# install and start openssh
-apt update
-apt install openssh-server
-mkdir /var/run/sshd
-/usr/sbin/sshd
-
 source /opt/ros/kinetic/setup.bash
 echo Starting roscore
 roscore& sleep 5
