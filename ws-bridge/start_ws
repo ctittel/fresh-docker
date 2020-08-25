@@ -8,3 +8,6 @@ echo Starting roscore
 roscore& sleep 5
 echo Starting rosbridge_server and rosbridge_websocket
 roslaunch rosbridge_server rosbridge_websocket.launch
+
+echo "Running the given parameters: $@"
+exec "$@"
