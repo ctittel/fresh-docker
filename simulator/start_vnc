@@ -23,4 +23,4 @@ echo "IP: $(hostname -I) ($(hostname))"
 # -shared: Allow several vnc connections at the same time
 
 echo "Running the given parameters: $@"
-bash -c '$@'
+exec $@
