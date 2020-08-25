@@ -16,4 +16,4 @@ Used ports:
 
 ### agent
 - `docker build -t ctonic/agent https://github.com/ctonic/fresh-docker.git#:agent`
-- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent python agent/main.py`
+- `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
