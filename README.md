@@ -12,4 +12,4 @@ Used ports:
 
 ### simulator
 - `docker build -t ctonic/nvidia-vnc https://github.com/ctonic/fresh-docker.git#:simulator`
-- `docker run -v --rm /home/christoph/data/simulator:/data -p 5900:5900 --gpus '"device=0"' -it --name c_simulator ctonic/nvidia-vnc ./data/ManipulatorEnvironment_Linux.x86_64`
+- `docker run --rm -v /home/christoph/data/simulator:/data -p 5900:5900 --gpus '"device=0"' -it --name c_simulator ctonic/nvidia-vnc ./data/ManipulatorEnvironment_Linux.x86_64`
