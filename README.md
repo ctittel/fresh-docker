@@ -69,5 +69,7 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 - Run in the correct order, for `acrobot-unity`:
     1. Run `c_ws_bridge`
     2. Run `c_simulation`
-    3. Optional: Connect to `c_simulation` via VNC from you client
-    4. Run `agent`
+    3. Wait > 10 seconds
+    4. Optional: Connect to `c_simulation` via VNC from you client; The client should show that it is connected to `RosBridge`
+    5. Wait a few seconds
+    6. Run `agent`
