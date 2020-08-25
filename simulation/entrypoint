@@ -10,7 +10,7 @@ chmod u+rw ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
 
 echo "Starting port forwarding of port 9090 from root@c_ws_bridge"
 # ssh -o StrictHostKeyChecking=no -4 -N -T -L 9090:localhost:9090 root@c_ws_bridge&   # VERY SLOW
-socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ws_bridge:9090
+socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ws_bridge:9090 &
 
 echo "Starting VNC"
 export DISPLAY=${DISPLAY:-:0} # Select screen 0 by default.
