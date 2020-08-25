@@ -6,7 +6,7 @@ services:
     build: ./ws-bridge
   nvidia-vnc:
     image: ctonic/nvidia-vnc
-    build: ./simulator
+    build: ./simulation
   agent:
     
   
