@@ -8,8 +8,8 @@ Used ports:
 ## Rund and Build commands
 ### ws-bridge
 - `docker build --tag ctonic/ws-bridge https://github.com/ctonic/fresh-docker.git#:ws-bridge`
-- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/root/.ssh --name c_ws_bridge ctonic/ws-bridge`
+- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh --name c_ws_bridge ctonic/ws-bridge`
 
 ### simulator
 - `docker build -t ctonic/nvidia-vnc https://github.com/ctonic/fresh-docker.git#:simulator`
-- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/root/.ssh -v /home/christoph/data/simulator:/data -p 5900:5900 --name c_simulator ctonic/nvidia-vnc "bash" "-c" "sleep 5 && ./data/ManipulatorEnvironment_Linux.x86_64"`
+- `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulator:/data -p 5900:5900 --name c_simulator ctonic/nvidia-vnc "bash" "-c" "sleep 5 && ./data/ManipulatorEnvironment_Linux.x86_64"`
