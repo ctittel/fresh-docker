@@ -47,12 +47,12 @@ This is useful if you want to see the OpenAi window via vnc (for training and vi
 - Building: `docker build -t ctonic/agent-vnc https://github.com/ctonic/fresh-docker.git#:agent-vnc`
 - Running: `docker run --rm --network c_network -dit -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent-vnc bash -c "cd agent && python main.py"`
 
-### ws-bridge
+### ros-bridge
 When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
-- Building: `docker build --tag ctonic/ws-bridge https://github.com/ctonic/fresh-docker.git#:ws-bridge`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh --name c_ws_bridge ctonic/ws-bridge`
+- Building: `docker build --tag ctonic/ros-bridge https://github.com/ctonic/fresh-docker.git#:ros-bridge`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh --name c_ws_bridge ctonic/ros-bridge`
 
 ### simulation
 Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
@@ -64,7 +64,7 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 
 - Adapt the commands above with your settings / naming / ports etc.
 - Build the required images
-    - For `acrobot-unity`: `agent`, `simulation` and `ws-bridge`
+    - For `acrobot-unity`: `agent`, `simulation` and `ros-bridge`
     - For OpenAi Gym: `agent-vnc`
 - Run in the correct order, for `acrobot-unity`:
     1. Run `c_ws_bridge`

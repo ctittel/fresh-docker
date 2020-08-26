@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  ws-bridge:
-    image: ctonic/ws-bridge
-    build: ./ws-bridge
+  ros-bridge:
+    image: ctonic/ros-bridge
+    build: ./ros-bridge
   nvidia-vnc:
     image: ctonic/nvidia-vnc
     build: ./simulation
