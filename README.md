@@ -58,7 +58,7 @@ Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using
 Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
 
 - Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name c_simulation ctonic/simulation "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+- Running: `docker run --user=$(id -u $USER):$(id -g $USER) --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name c_simulation ctonic/simulation "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
 
 ## How to run
 
