@@ -38,14 +38,14 @@ If you use other ports / names / settings, you have to substitute in the command
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
 
 - Building: `docker build -t ctonic/agent https://github.com/ctonic/fresh-docker.git#:agent`
-- Running: `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
 
 ### agent-vnc
 Builds on top of the agent container and also contains vnc applications.
 This is useful if you want to see the OpenAi window via vnc (for training and viewing the Unity simulation use `agent` and `simulation`).
 
 - Building: `docker build -t ctonic/agent-vnc https://github.com/ctonic/fresh-docker.git#:agent-vnc`
-- Running: `docker run --rm --network c_network -it -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent-vnc bash -c "cd agent && python main.py"`
+- Running: `docker run --rm --network c_network -dit -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent-vnc bash -c "cd agent && python main.py"`
 
 ### ws-bridge
 When training the Unity robot this must be run first.
@@ -59,6 +59,10 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 
 - Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
 - Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation ctonic/simulation "bash" "-c" "sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+
+### simulation-test
+- Building: `docker build -t ctonic/simulation-test https://github.com/ctonic/fresh-docker.git#:simulation-test`
+- Running: `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_test ctonic/simulation-test "bash"`
 
 ## How to run
 
