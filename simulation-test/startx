@@ -1,4 +1,0 @@
-echo "Starting X server ..."
-Xorg vt10 :0 &
-echo "X server log: /var/log/Xorg.0.log"
-echo "Started X server"
