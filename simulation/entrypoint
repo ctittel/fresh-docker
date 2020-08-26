@@ -2,8 +2,8 @@
 
 echo "Running start_vnc script"
 
-echo "Starting port forwarding of port 9090 from root@c_ros_bridge"
-socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090 &
+# echo "Starting port forwarding of port 9090 from root@c_ros_bridge"
+# socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090 &
 
 echo "Starting VNC"
 export DISPLAY=${DISPLAY:-:0} # Select screen 0 by default.
