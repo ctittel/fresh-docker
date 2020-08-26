@@ -4,6 +4,6 @@ ADD entrypoint /usr/bin/entrypoint
 RUN chmod a+x /usr/bin/entrypoint
 COPY sudoers /etc/sudoers
 RUN chown root:root /etc/sudoers && chmod a-rwx /etc/sudoers && chmod ug+r /etc/sudoers
-RUN apt-get install --reinstall libgtk2.0-0
+RUN apt-get install -y --reinstall libgtk2.0-0
 CMD ["echo No command given!"]
 ENTRYPOINT ["entrypoint"]
