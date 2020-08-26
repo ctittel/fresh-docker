@@ -62,18 +62,16 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 
 DEBUG:
 ```sh
-docker run --rm --network c_network -it --gpus '"device=0"' \
-            -v /home/christoph/data/simulation:/simulation -p 5900:5900 \
+docker run -it \
+    --rm \
+    --gpus '"device=0"' \
+    -p 5900:5900 \
     --user=$(id -u $USER):$(id -g $USER) \
     --env="DISPLAY" \
-    --workdir="/home/$USER" \
-    --volume="/home/$USER:/home/$USER" \
-    --volume="/etc/group:/etc/group:ro" \
-    --volume="/etc/passwd:/etc/passwd:ro" \
-    --volume="/etc/shadow:/etc/shadow:ro" \
-    --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-            --name c_simulation ctonic/simulation "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"
+    --name c_simulation \
+    ctonic/simulation \
+    "bash"
 ```
 
 ### simulation-test
