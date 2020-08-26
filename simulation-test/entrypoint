@@ -7,6 +7,9 @@ echo "Starting Xorg"
 Xorg -noreset +extension RANDR +extension RENDER -logfile ./xdummy.log -config ./xorg.conf "$DISPLAY" &
 # +extension GLX 
 
+
+x11vnc -forever -xdummy
+
 sleep 3
 
 echo "Starting x11vnc"

@@ -14,5 +14,5 @@ RUN rm -rf /var/lib/apt/lists/* &&\
 ADD entrypoint /usr/bin/entrypoint
 RUN chmod a+x /usr/bin/entrypoint
 # RUN apt-get install -y --reinstall libgtk2.0-0
-CMD ["echo No command given!"]
-ENTRYPOINT ["entrypoint"]
+# CMD ["echo No command given!"]
+# ENTRYPOINT ["entrypoint"]
