@@ -8,7 +8,7 @@ echo "Starting x11vnc"
 export DISPLAY=:0
 x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &
 
-if [ "$@" ]; then
+if [ -z "$@" ]; then
     echo "Running the given parameters: $@"
     exec "$@"
 fi
