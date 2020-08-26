@@ -23,7 +23,7 @@ If you use other ports / names / settings, you have to substitute in the command
 ### Container / Variable names
 - `c_network`: self-contained Docker network
 - `c_agent`: container running agent code (does the training)
-- `c_ws_bridge`: container with the ROS bridge
+- `c_ros_bridge`: container with the ROS bridge
 - `c_simulation`: Runs the Unity simulation
 
 ### Settings
@@ -52,7 +52,7 @@ When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
 - Building: `docker build --tag ctonic/ros-bridge https://github.com/ctonic/fresh-docker.git#:ros-bridge`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' --name c_ws_bridge ctonic/ros-bridge`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' --name c_ros_bridge ctonic/ros-bridge`
 
 ### simulation
 Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
@@ -67,7 +67,7 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
     - For `acrobot-unity`: `agent`, `simulation` and `ros-bridge`
     - For OpenAi Gym: `agent-vnc`
 - Run in the correct order, for `acrobot-unity`:
-    1. Run `c_ws_bridge`
+    1. Run `c_ros_bridge`
     2. Run `c_simulation`
     3. Wait > 10 seconds
     4. Optional: Connect to `c_simulation` via VNC from you client; The client should show that it is connected to `RosBridge`
