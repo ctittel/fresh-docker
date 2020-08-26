@@ -52,13 +52,13 @@ When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
 - Building: `docker build --tag ctonic/ros-bridge https://github.com/ctonic/fresh-docker.git#:ros-bridge`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh --name c_ws_bridge ctonic/ros-bridge`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' --name c_ws_bridge ctonic/ros-bridge`
 
 ### simulation
 Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
 
 - Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation ctonic/simulation "bash" "-c" "sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation ctonic/simulation "bash" "-c" "sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
 
 ## How to run
 
