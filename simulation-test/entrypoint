@@ -1,11 +1,12 @@
 #!/bin/bash
 #set -x
 
+export DISPLAY=:0
+
 echo "Starting Xorg"
-Xorg -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./xdummy.log -config ./xorg.conf &
+Xorg -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./xdummy.log -config ./xorg.conf "$DISPLAY" &
 
 echo "Starting x11vnc"
-export DISPLAY=:0
 x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &
 
 echo "Running the given parameters: $@"
