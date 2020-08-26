@@ -17,3 +17,13 @@ cp /ssh/id_rsa.pub ~/.ssh/authorized_keys
 
 # Docker: installing SSH server
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654 && apt update && apt install -y openssh-server && mkdir /var/run/sshd && /usr/sbin/sshd
+
+# xvfb and x11vnc
+# if which x11vnc &>/dev/null; then
+#   ! pgrep -a x11vnc && x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &
+# fi
+# ! pgrep -a Xvfb && Xvfb $DISPLAY -screen 0 1600x900x16 &
+# sleep 1
+# if which fluxbox &>/dev/null; then
+#   ! pgrep -a fluxbox && fluxbox 2>/dev/null &
+# fi
