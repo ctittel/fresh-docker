@@ -10,5 +10,5 @@ x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &
 
 if [ $@ ]; then
     echo "Running the given parameters: $@"
-    exec $@
+    exec "$@"
 fi
