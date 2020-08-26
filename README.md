@@ -60,10 +60,6 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 - Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
 - Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/ssh:/ssh -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation ctonic/simulation "bash" "-c" "sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
 
-### simulation-test
-- Building: `docker build -t ctonic/simulation-test https://github.com/ctonic/fresh-docker.git#:simulation-test`
-- Running: `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_test ctonic/simulation-test "bash"`
-
 ## How to run
 
 - Adapt the commands above with your settings / naming / ports etc.

@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# SSH Stuff: register public key and start ssh
-mkdir ~/.ssh
-cp /ssh/id_rsa.pub ~/.ssh/authorized_keys
-/usr/sbin/sshd # run SSH server
-
 source /opt/ros/kinetic/setup.bash
 echo Starting roscore
 roscore& sleep 5
