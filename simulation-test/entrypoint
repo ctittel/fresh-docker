@@ -6,6 +6,8 @@ export DISPLAY=:0
 echo "Starting Xorg"
 Xorg -noreset +extension GLX +extension RANDR +extension RENDER -logfile ./xdummy.log -config ./xorg.conf "$DISPLAY" &
 
+sleep 3
+
 echo "Starting x11vnc"
 x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &
 
