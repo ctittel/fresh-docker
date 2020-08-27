@@ -52,13 +52,16 @@ When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
 - Building: `docker build --tag ctonic/ros-bridge https://github.com/ctonic/fresh-docker.git#:ros-bridge`
-- Running: `docker run --rm --network c_network -v -p 9090:9090 -dit --gpus '"device=0"' --name c_ros_bridge ctonic/ros-bridge`
+- Running: `docker run --rm --network c_network -p 9090:9090 -it --gpus '"device=0"' --name c_ros_bridge ctonic/ros-bridge`
 
-### simulation
-Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
+### Simulation
+1. Start a new X11 instance on the server (if there isn't one already): **xinit `which bash` -- :3 vt2**
+2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1920x1080`
+3. Start the vnc server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
+4. Start the simulation (after starting the ros-bridge): `DISPLAY=:3 ./ManipulatorEnvironment_Linux.x86_64`
+5. On the client: Bridge the VNC server port from the server to your client `ssh -N -T -L 5900:localhost:5900 user@remotehost &` and start your vnc client `vncviewer localhost:5900`
 
-- Building: `docker build -t ctonic/simulation https://github.com/ctonic/fresh-docker.git#:simulation`
-- Running: `docker run --user=$(id -u $USER):$(id -g $USER) --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --name c_simulation ctonic/simulation "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+Interesting: "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
 
 DEBUG:
 ```sh
@@ -76,7 +79,7 @@ docker run -it \
 
 docker run -it \
     --rm \
-    --name="c_simulator" \
+    --name="c_simulation" \
     --user=$(id -u $USER):$(id -g $USER) \
     --gpus '"device=0"' \
     --env="DISPLAY" \
