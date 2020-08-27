@@ -37,6 +37,7 @@ docker run  --rm -it \
             --gpus '"device=0"' \
             -v /home/christoph/data/agent:/agent \
             --name c_agent \
+            -u $(id -u $USER):$(id -g $USER) \
             ctonic/agent \
             bash -c "cd agent && python main.py"
 ```
