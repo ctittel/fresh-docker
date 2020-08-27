@@ -1,0 +1,13 @@
+Port forwarding: socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090&
+
+### simulation-test
+Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
+
+- Building: `docker build -t ctonic/simulation-test https://github.com/ctonic/fresh-docker.git#:simulation-test`
+- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation_test ctonic/simulation-test "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
+
+
+Note to self: Working OpenGl with Cuda G
+```
+docker run --rm -it   --name c_test   -u $(id -u $USER):$(id -g $USER)   -e DISPLAY   -v /tmp/.X11-unix:/tmp/.X11-unix:rw  -v  /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro  -v /etc/shadow:/etc/shadow:ro  -v /home/christoph:/home/christoph -v /etc/sudoers.d:/etc/sudoers.d:ro --privileged                                        --env="QT_X11_NO_MITSHM=1"  --gpus '"device=0"'      nvidia/cudagl:10.0-devel-ubuntu18.04
+```

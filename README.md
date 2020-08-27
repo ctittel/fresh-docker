@@ -1,24 +1,12 @@
-# docker-fun
-
-Used ports:
-- 9090 for ROS bridge (can be done within a network)
-- 22 for SSH (can be done within a network)
-- 5900 for VNC (must be published to host)
-
-## VNC client instructions
-Instructions to see the GUI via VNC on your client:
-Run these commands on your clients if a vnc server (from `agent-vnc` or `simulation`) is running:
-
-- Forward the VNC port from the server to your client: `ssh -N -T -L 5900:localhost:5900 user@remotehost &`
-- Run the VNC client: `vncviewer localhost:5900`
-
+# fresh-docker
 ## Assumptions
 These are the ports, names and settings that are used in the given commands.
 If you use other ports / names / settings, you have to substitute in the commands below.
 
 ### Ports
-- VNC: Uses Port `5900`, which is exposed to the host server
-- other networking happening is SSH (port 22) and the ROS bridge (9090), but this happens in a self-contained network
+- the following ports are exposed to the host server, make sure they are free or choose different ones:
+    - VNC server runs on port `5900`
+    - ROS bridge uses port `9090`
 
 ### Container / Variable names
 - `c_network`: self-contained Docker network
@@ -30,7 +18,6 @@ If you use other ports / names / settings, you have to substitute in the command
 - Using the first GPU of the server, GPU 0
 - In my home drive I have a directory called `/home/christoph/data` with the following subdirectories:
     - `agent`: contains all the agent code; `main.py` is inside this directory
-    - `ssh`: contains a public and private key pair called `id_rsa` and `id_rsa.pub` (can be generated with `ssh-keygen`)
     - `simulation`: contains the unity application; the executable is directly below this (whole path to it: `data/simulation/ManipulatorEnvironment_Linux.x86_64`)
 
 ## Containers and Images
@@ -38,7 +25,7 @@ If you use other ports / names / settings, you have to substitute in the command
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
 
 - Building: `docker build -t ctonic/agent https://github.com/ctonic/fresh-docker.git#:agent`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
+- Running: `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
 
 ### agent-vnc
 Builds on top of the agent container and also contains vnc applications.
@@ -60,21 +47,6 @@ Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using
 3. Start the vnc server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
 4. Start the simulation (after starting the ros-bridge): `DISPLAY=:3 ./ManipulatorEnvironment_Linux.x86_64`
 5. On the client: Bridge the VNC server port from the server to your client `ssh -N -T -L 5900:localhost:5900 user@remotehost &` and start your vnc client `vncviewer localhost:5900`
-
-Interesting: "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
-
-
-### simulation-test
-Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
-
-- Building: `docker build -t ctonic/simulation-test https://github.com/ctonic/fresh-docker.git#:simulation-test`
-- Running: `docker run --rm --network c_network -dit --gpus '"device=0"' -v /home/christoph/data/simulation:/simulation -p 5900:5900 --name c_simulation_test ctonic/simulation-test "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
-
-
-Note to self: Working OpenGl with Cuda G
-```
-docker run --rm -it   --name c_test   -u $(id -u $USER):$(id -g $USER)   -e DISPLAY   -v /tmp/.X11-unix:/tmp/.X11-unix:rw  -v  /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro  -v /etc/shadow:/etc/shadow:ro  -v /home/christoph:/home/christoph -v /etc/sudoers.d:/etc/sudoers.d:ro --privileged                                        --env="QT_X11_NO_MITSHM=1"  --gpus '"device=0"'      nvidia/cudagl:10.0-devel-ubuntu18.04
-```
 
 ## How to run
 
