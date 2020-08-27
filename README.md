@@ -24,22 +24,64 @@ If you use other ports / names / settings, you have to substitute in the command
 ### agent
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
 
-- Building: `docker build -t ctonic/agent https://github.com/ctonic/fresh-docker.git#:agent`
-- Running: `docker run --rm --network c_network -it --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent bash -c "cd agent && python main.py"`
+Building:
+```sh
+docker build -t ctonic/agent \
+        https://github.com/ctonic/fresh-docker.git#:agent
+```
+
+Running:
+```sh
+docker run  --rm -it \
+            --network c_network \
+            --gpus '"device=0"' \
+            -v /home/christoph/data/agent:/agent \
+            --name c_agent \
+            ctonic/agent \
+            bash -c "cd agent && python main.py"
+```
 
 ### agent-vnc
 Builds on top of the agent container and also contains vnc applications.
 This is useful if you want to see the OpenAi window via vnc (for training and viewing the Unity simulation use `agent` and `simulation`).
 
-- Building: `docker build -t ctonic/agent-vnc https://github.com/ctonic/fresh-docker.git#:agent-vnc`
-- Running: `docker run --rm --network c_network -dit -p 5900:5900 --gpus '"device=0"' -v /home/christoph/data/agent:/agent --name c_agent ctonic/agent-vnc bash -c "cd agent && python main.py"`
+Building: 
+```sh
+docker build -t ctonic/agent-vnc \
+        https://github.com/ctonic/fresh-docker.git#:agent-vnc
+```
+
+Running:
+```sh
+docker run  --rm -it \
+            --network c_network \
+            -p 5900:5900 \
+            --gpus '"device=0"' \
+            -v /home/christoph/data/agent:/agent \
+            --name c_agent \
+            ctonic/agent-vnc \
+            bash -c "cd agent && python main.py"
+```
 
 ### ros-bridge
 When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
-- Building: `docker build --tag ctonic/ros-bridge https://github.com/ctonic/fresh-docker.git#:ros-bridge`
-- Running: `docker run --rm --network c_network -p 9090:9090 -it --gpus '"device=0"' --name c_ros_bridge ctonic/ros-bridge`
+Building:
+```sh
+docker build --tag ctonic/ros-bridge \
+https://github.com/ctonic/fresh-docker.git#:ros-bridge
+```
+
+Running: 
+```sh
+docker run  --rm -it \
+            --network c_network \
+            -p 9090:9090 \
+            --gpus '"device=0"' \
+            --name c_ros_bridge \
+            ctonic/ros-bridge
+```
 
 ### Simulation
 1. Start a new X11 instance on the server (if there isn't one already): **xinit `which bash` -- :3 vt2**
