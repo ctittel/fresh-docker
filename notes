@@ -9,5 +9,39 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
 
 Note to self: Working OpenGl with Cuda G
 ```
-docker run --rm -it   --name c_test   -u $(id -u $USER):$(id -g $USER)   -e DISPLAY   -v /tmp/.X11-unix:/tmp/.X11-unix:rw  -v  /etc/group:/etc/group:ro  -v /etc/passwd:/etc/passwd:ro  -v /etc/shadow:/etc/shadow:ro  -v /home/christoph:/home/christoph -v /etc/sudoers.d:/etc/sudoers.d:ro --privileged                                        --env="QT_X11_NO_MITSHM=1"  --gpus '"device=0"'      nvidia/cudagl:10.0-devel-ubuntu18.04
+docker run  --rm -it \
+            --name c_test \
+            -u $(id -u $USER):$(id -g $USER) \
+            -e DISPLAY \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+            -v  /etc/group:/etc/group:ro \
+            -v /etc/passwd:/etc/passwd:ro \
+            -v /etc/shadow:/etc/shadow:ro \
+            -v /home/christoph:/home/christoph \
+            -v /etc/sudoers.d:/etc/sudoers.d:ro \
+            --privileged \
+            --env="QT_X11_NO_MITSHM=1" \
+            --gpus '"device=0"' \
+            nvidia/cudagl:10.0-devel-ubuntu18.04
+```
+
+
+Previous, make it run
+```
+docker run  --rm -it \
+            --name c_simulation \
+            --net c_network \
+            -u $(id -u $USER):$(id -g $USER) \
+            -e DISPLAY \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+            -v  /etc/group:/etc/group:ro \
+            -v /etc/passwd:/etc/passwd:ro \
+            -v /etc/shadow:/etc/shadow:ro \
+            -v /home/christoph:/home/christoph \
+            -v /etc/sudoers.d:/etc/sudoers.d:ro \
+            --privileged \
+            --env="QT_X11_NO_MITSHM=1" \
+            --gpus '"device=0"' \
+            nvidia/cudagl:10.0-devel-ubuntu18.04 \
+            /home/christoph/data/simulation/simulation
 ```

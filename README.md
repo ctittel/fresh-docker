@@ -85,6 +85,24 @@ docker run  --rm -it \
 ```
 
 ### Simulation
+Debug:
+```
+docker run  --rm -it \
+            --gpus '"device=0"' \
+            --network c_network \
+            --name c_test \
+            -v /home/christoph:/home/christoph \
+            -e "DISPLAY" -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+            -u $(id -u $USER):$(id -g $USER) \
+            -v "/etc/group:/etc/group:ro" \
+            -v "/etc/passwd:/etc/passwd:ro" \
+            -v "/etc/shadow:/etc/shadow:ro" \
+            -v "/etc/sudoers.d:/etc/sudoers.d:ro" \
+            ubuntu \
+            home/christoph/data/simulation/ManipulatorEnvironment_Linux.x86_64
+```
+
+
 1. Start a new X11 instance on the server (if there isn't one already): 
 ```bash
 xinit `which bash` -- :3 vt2

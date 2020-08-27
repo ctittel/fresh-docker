@@ -12,3 +12,4 @@ torch
 numpy>= 1.15.4
 matplotlib
 opencv-python
+zmq
