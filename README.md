@@ -106,28 +106,29 @@ docker run  --rm -it \
 ```
 
 
+
+## How to run
+### Running acrobot_unity, ManipulatorEnvironment and VNC
+- Preparation:
+    - Build `agent` with the given build command above
 1. Start a new X11 instance on the server (if there isn't one already): 
 ```bash
 xinit `which bash` -- :3 vt2
 ```
-2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1920x1080`
-3. Start the vnc server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
-4. Start the simulation (after starting the ros-bridge): `DISPLAY=:3 ./ManipulatorEnvironment_Linux.x86_64`
-5. On the client: Bridge the VNC server port from the server to your client `ssh -N -T -L 5900:localhost:5900 user@remotehost &` and start your vnc client `vncviewer localhost:5900`
+2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1600x900`
+3. Optional: Start the vnc server and connect to it with your PC
+    1. Start VNC server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
+    2. On your PC: Establish SSH bridge to the VNC server: `ssh -N -T -L 5900:localhost:5900 user@remotehost &`
+    3. On your PC: Start the vnc client: `vncviewer localhost:5900`
+4. Start `simulation`:
+    1. Set the `DISPLAY` variable in your current SSH shell so the simulation knows its X server: `export DISPLAY=:3`
+    2. Start `simulation` with the corresponding `docker run` command above
+5. Start `agent` with the corresponding `docker run` command above
 
-## How to run
-
-- Adapt the commands above with your settings / naming / ports etc.
-- Build the required images
-    - For `acrobot-unity`: `agent`, `simulation` and `ros-bridge`
-    - For OpenAi Gym: `agent-vnc`
-- Run in the correct order, for `acrobot-unity`:
-    1. Run `c_ros_bridge`
-    2. Run `c_simulation`
-    3. Wait > 10 seconds
-    4. Optional: Connect to `c_simulation` via VNC from you client; The client should show that it is connected to `RosBridge`
-    5. Wait a few seconds
-    6. Run `agent`
+### Running agent for training with OpenAI gym
+Execute the two commands given under `agent-vnc`.
+To connect to it with your PC:
+Execute `ssh -N -T -L 5900:localhost:5900 user@remotehost &` and `vncviewer localhost:5900` on your PC.
 
 # Useful links
 - http://wiki.ros.org/docker/Tutorials/GUI
