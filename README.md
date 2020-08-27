@@ -25,13 +25,13 @@ If you use other ports / names / settings, you have to substitute in the command
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
 
 Building:
-```sh
+```bash
 docker build -t ctonic/agent \
         https://github.com/ctonic/fresh-docker.git#:agent
 ```
 
 Running:
-```sh
+```bash
 docker run  --rm -it \
             --network c_network \
             --gpus '"device=0"' \
@@ -46,13 +46,13 @@ Builds on top of the agent container and also contains vnc applications.
 This is useful if you want to see the OpenAi window via vnc (for training and viewing the Unity simulation use `agent` and `simulation`).
 
 Building: 
-```sh
+```bash
 docker build -t ctonic/agent-vnc \
         https://github.com/ctonic/fresh-docker.git#:agent-vnc
 ```
 
 Running:
-```sh
+```bash
 docker run  --rm -it \
             --network c_network \
             -p 5900:5900 \
@@ -68,13 +68,13 @@ When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
 
 Building:
-```sh
+```bash
 docker build --tag ctonic/ros-bridge \
 https://github.com/ctonic/fresh-docker.git#:ros-bridge
 ```
 
 Running: 
-```sh
+```bash
 docker run  --rm -it \
             --network c_network \
             -p 9090:9090 \
@@ -84,7 +84,10 @@ docker run  --rm -it \
 ```
 
 ### Simulation
-1. Start a new X11 instance on the server (if there isn't one already): **xinit `which bash` -- :3 vt2**
+1. Start a new X11 instance on the server (if there isn't one already): 
+```bash
+xinit `which bash` -- :3 vt2
+```
 2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1920x1080`
 3. Start the vnc server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
 4. Start the simulation (after starting the ros-bridge): `DISPLAY=:3 ./ManipulatorEnvironment_Linux.x86_64`
