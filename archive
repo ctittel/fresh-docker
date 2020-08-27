@@ -1,23 +1,5 @@
 # Old code which might be useful later
 
-# start SSH fowarding
-ssh -o StrictHostKeyChecking=no -4 -N -T -L 9090:localhost:9090 root@c_ws_bridge& 
-
-# installing SSH code
-echo "Installing SSH keys"
-mkdir ~/.ssh
-cp /ssh/id_rsa /ssh/id_rsa.pub ~/.ssh
-chmod a-rw ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
-chmod u+rw ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
-
-# SSH Stuff: register public key and start ssh server
-mkdir ~/.ssh
-cp /ssh/id_rsa.pub ~/.ssh/authorized_keys
-/usr/sbin/sshd # run SSH server
-
-# Docker: installing SSH server
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F42ED6FBAB17C654 && apt update && apt install -y openssh-server && mkdir /var/run/sshd && /usr/sbin/sshd
-
 # xvfb and x11vnc
 # if which x11vnc &>/dev/null; then
 #   ! pgrep -a x11vnc && x11vnc -bg -forever -nopw -quiet -shared -display WAIT$DISPLAY &

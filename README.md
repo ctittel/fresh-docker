@@ -63,35 +63,6 @@ Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using
 
 Interesting: "bash" "-c" "socat TCP4-LISTEN:9090,fork,reuseaddr TCP4:c_ros_bridge:9090& sleep 5 && ./simulation/ManipulatorEnvironment_Linux.x86_64"`
 
-DEBUG:
-```sh
-docker run -it \
-    --rm \
-    --gpus '"device=0"' \
-    -p 5900:5900 \
-    --user=$(id -u $USER):$(id -g $USER) \
-    --env="DISPLAY" \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    --name c_simulation \
-    ctonic/simulation \
-    "bash"
-```
-
-docker run -it \
-    --rm \
-    --name="c_simulation" \
-    --user=$(id -u $USER):$(id -g $USER) \
-    --gpus '"device=0"' \
-    --env="DISPLAY" \
-    -v /home/christoph:/home/christoph \
-    -p 5900:5900 \
-    --volume="/etc/group:/etc/group:ro" \
-    --volume="/etc/passwd:/etc/passwd:ro" \
-    --volume="/etc/shadow:/etc/shadow:ro" \
-    --volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    ctonic/simulation
-
 
 ### simulation-test
 Runs the simulation and a VNC server. You can connect to the vnc with the instructions above.
@@ -113,3 +84,6 @@ Runs the simulation and a VNC server. You can connect to the vnc with the instru
     4. Optional: Connect to `c_simulation` via VNC from you client; The client should show that it is connected to `RosBridge`
     5. Wait a few seconds
     6. Run `agent`
+
+# Useful links
+- http://wiki.ros.org/docker/Tutorials/GUI
