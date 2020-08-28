@@ -40,27 +40,6 @@ docker run  --rm -it \
             bash -c "cd agent && $agent_start"
 ```
 
-### agent-vnc
-Builds on top of the agent container and also contains vnc applications.
-This is useful if you want to see the OpenAi window via vnc (for training and viewing the Unity simulation use `agent` and `simulation`).
-
-Building: 
-```bash
-docker build -t ctonic/agent-vnc agent-vnc
-```
-
-Running:
-```bash
-docker run  --rm -it \
-            --name "$name_agent" \
-            --net "$network" \
-            --gpus "$gpus" \
-            -p 5900:5900 \
-            -v /home/$USER/data/agent:/agent:rw \
-            ctonic/agent-vnc \
-            bash -c "cd agent && python main.py"
-```
-
 ### ros-bridge
 When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.
@@ -124,11 +103,6 @@ xinit `which bash` -- $display vt2
     2. Start `simulation` with the corresponding `docker run` command above
 
 xinit `which bash` -- $display vt2& sleep 5 && x11vnc -nopw -forever -shared -quiet
-
-### Running agent for training with OpenAI gym
-Execute the two commands given under `agent-vnc`.
-To connect to it with your PC:
-Execute `ssh -N -T -L 5900:localhost:5900 user@remotehost &` and `vncviewer localhost:5900` on your PC.
 
 # Useful links
 - http://wiki.ros.org/docker/Tutorials/GUI
