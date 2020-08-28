@@ -1,28 +1,23 @@
 # fresh-docker
-## Assumptions
-These are the ports, names and settings that are used in the given commands.
-If you use other ports / names / settings, you have to substitute in the commands below.
-
-### Ports
-- the following ports are exposed to the host server, make sure they are free or choose different ones:
-    - VNC server runs on port `5900`
-    - ROS bridge uses port `9090`
-
-### Container / Variable names
-- `c_network`: self-contained Docker network
-- `c_agent`: container running agent code (does the training)
-- `c_ros_bridge`: container with the ROS bridge
-- `c_simulation`: Runs the Unity simulation
-
-### Settings
-- Using the first GPU of the server, GPU 0
-- In my home drive I have a directory called `/home/christoph/data` with the following subdirectories:
-    - `agent`: contains all the agent code; `main.py` is inside this directory
-    - `simulation`: contains the unity application; the executable is directly below this (whole path to it: `data/simulation/ManipulatorEnvironment_Linux.x86_64`)
+## Setup
+- On the server:
+    - install docker
+    - install `xorg`
+    - install `x11vnc`
+    - create the `xorg.conf` configuration file for the x11 server
+        - on a headless server with nvidia GPUs, this can be done with this command: `sudo nvidia-xconfig -a --use-display-device=None`
+        - see also: https://carla.readthedocs.io/en/0.9.7/carla_headless/
+    - edit the file `/etc/X11/Xwrapper.config` to include the line `allowed_users=anybody`
+        - this is required to be able to start a x11 server from the command line via SSH
+    - clone this repository
+    - cd into this repository and run `chmod a+x install && ./install`
+- On your client:
+    - install a vnc client, e.g. `tigervnc`
 
 ## Containers and Images
-Clone this repository on the server, cd into it with `cd fresh-docker` and run this command in every shell before running any of the commands 
-below to set the environment variables: `source settings`
+The build commands below use relative references to the `Dockerfile`'s.
+Enter a local clone of this repository (e.g. with `cd fresh-docker`) before executing them.
+The run commands contain environment variables which can be set with `source settings` when inside `fresh-docker`.
 
 ### agent
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
