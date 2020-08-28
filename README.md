@@ -33,10 +33,10 @@ docker build -t ctonic/agent \
 Running:
 ```bash
 docker run  --rm -it \
-            --network c_network \
-            --gpus '"device=0"' \
-            -v /home/christoph/data/agent:/agent \
             --name c_agent \
+            --net c_network \
+            --gpus '"device=0"' \
+            -v /home/christoph/data/agent:/agent:rw \
             -u $(id -u $USER):$(id -g $USER) \
             ctonic/agent \
             bash -c "cd agent && python main.py"
@@ -55,11 +55,11 @@ docker build -t ctonic/agent-vnc \
 Running:
 ```bash
 docker run  --rm -it \
-            --network c_network \
-            -p 5900:5900 \
-            --gpus '"device=0"' \
-            -v /home/christoph/data/agent:/agent \
             --name c_agent \
+            --net c_network \
+            --gpus '"device=0"' \
+            -p 5900:5900 \
+            -v /home/christoph/data/agent:/agent:rw \
             ctonic/agent-vnc \
             bash -c "cd agent && python main.py"
 ```
@@ -77,10 +77,10 @@ https://github.com/ctonic/fresh-docker.git#:ros-bridge
 Running: 
 ```bash
 docker run  --rm -it \
-            --network c_network \
-            -p 9090:9090 \
-            --gpus '"device=0"' \
             --name c_ros_bridge \
+            --net c_network \
+            --gpus '"device=0"' \
+            -p 9090:9090 \
             ctonic/ros-bridge
 ```
 
@@ -90,6 +90,7 @@ Running:
 docker run  --rm -it \
             --name c_simulation \
             --net c_network \
+            --gpus '"device=0"' \
             -u $(id -u $USER):$(id -g $USER) \
             -e DISPLAY \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
@@ -101,7 +102,6 @@ docker run  --rm -it \
             -v /etc/sudoers.d:/etc/sudoers.d:ro \
             --privileged \
             --env="QT_X11_NO_MITSHM=1" \
-            --gpus '"device=0"' \
             nvidia/cudagl:10.0-devel-ubuntu18.04 \
             bash -c "cd  /home/christoph/data/simulation/ && ./ManipulatorEnvironment_Linux.x86_64"
 ```
