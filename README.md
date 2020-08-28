@@ -33,13 +33,13 @@ docker build -t ctonic/agent \
 Running:
 ```bash
 docker run  --rm -it \
-            --name $name_agent \
-            --net $name_network \
+            --name "$name_agent" \
+            --net "$network" \
             --gpus "$gpus" \
-            -v /home/christoph/data/agent:/agent:rw \
+            -v "$agent_path":/agent:rw \
             -u $(id -u $USER):$(id -g $USER) \
             ctonic/agent \
-            bash -c "cd agent && python main.py"
+            bash -c "cd agent && $agent_start"
 ```
 
 ### agent-vnc
@@ -55,8 +55,8 @@ docker build -t ctonic/agent-vnc \
 Running:
 ```bash
 docker run  --rm -it \
-            --name c_agent \
-            --net $name_network \
+            --name "$name_agent" \
+            --net "$network" \
             --gpus "$gpus" \
             -p 5900:5900 \
             -v /home/christoph/data/agent:/agent:rw \
@@ -78,7 +78,7 @@ Running:
 ```bash
 docker run  --rm -it \
             --name c_ros_bridge \
-            --net $name_network \
+            --net $network \
             --gpus "$gpus" \
             -p 9090:9090 \
             ctonic/ros-bridge
@@ -88,8 +88,8 @@ docker run  --rm -it \
 Running:
 ```bash
 docker run  --rm -it \
-            --name c_simulation \
-            --net $name_network \
+            --name "$name_simulation" \
+            --net "$network" \
             --gpus "$gpus" \
             -u $(id -u $USER):$(id -g $USER) \
             -e DISPLAY=$display \
@@ -97,7 +97,7 @@ docker run  --rm -it \
             -v  /etc/group:/etc/group:ro \
             -v /etc/passwd:/etc/passwd:ro \
             -v /etc/shadow:/etc/shadow:ro \
-            -v "$simulation_path$:/home/$USER/simulation:rw \
+            -v "$simulation_path":/home/$USER/simulation:rw \
             -v /home/$USER/.config:/home/$USER/.config:rw \
             -v /etc/sudoers.d:/etc/sudoers.d:ro \
             --privileged \
@@ -119,7 +119,7 @@ First run `source ./settings` in every shell
 ```bash
 xinit `which bash` -- $display vt2
 ```
-2. Change its screen resolution if you want: `DISPLAY=$display xrandr --fb 1920x1080`
+2. Change its screen resolution if you want: `DISPLAY=$display xrandr --fb 1920x1200`
 3. Optional: Start the vnc server and connect to it with your PC
     1. Start VNC server: `DISPLAY=$display x11vnc -nopw -forever -shared`
     2. On your PC: Establish SSH bridge to the VNC server: `ssh -N -T -L 5900:localhost:5900 user@remotehost &`
