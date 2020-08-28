@@ -31,8 +31,3 @@ export simulation_path="/home/$USER/data/simulation/"
 
 # the code to start the simulation when inside $simulation_path
 export simulation_start="./ManipulatorEnvironment_Linux.x86_64"
-
-# a display which either 
-# - doesn't currently have a X11 server yet
-# - has a server you can access
-export display=:4
