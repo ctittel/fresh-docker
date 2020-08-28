@@ -33,9 +33,9 @@ docker build -t ctonic/agent \
 Running:
 ```bash
 docker run  --rm -it \
-            --name c_agent \
-            --net c_network \
-            --gpus '"device=0"' \
+            --name $name_agent \
+            --net $name_network \
+            --gpus "$gpus" \
             -v /home/christoph/data/agent:/agent:rw \
             -u $(id -u $USER):$(id -g $USER) \
             ctonic/agent \
@@ -56,8 +56,8 @@ Running:
 ```bash
 docker run  --rm -it \
             --name c_agent \
-            --net c_network \
-            --gpus '"device=0"' \
+            --net $name_network \
+            --gpus "$gpus" \
             -p 5900:5900 \
             -v /home/christoph/data/agent:/agent:rw \
             ctonic/agent-vnc \
@@ -78,8 +78,8 @@ Running:
 ```bash
 docker run  --rm -it \
             --name c_ros_bridge \
-            --net c_network \
-            --gpus '"device=0"' \
+            --net $name_network \
+            --gpus "$gpus" \
             -p 9090:9090 \
             ctonic/ros-bridge
 ```
@@ -89,37 +89,39 @@ Running:
 ```bash
 docker run  --rm -it \
             --name c_simulation \
-            --net c_network \
-            --gpus '"device=0"' \
+            --net $name_network \
+            --gpus "$gpus" \
             -u $(id -u $USER):$(id -g $USER) \
-            -e DISPLAY \
+            -e DISPLAY=$display \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v  /etc/group:/etc/group:ro \
             -v /etc/passwd:/etc/passwd:ro \
             -v /etc/shadow:/etc/shadow:ro \
-            -v /home/christoph/data/simulation:/home/christoph/data/simulation:rw \
-            -v /home/christoph/.config:/home/christoph/.config:rw \
+            -v "$simulation_path$:/home/$USER/simulation:rw \
+            -v /home/$USER/.config:/home/$USER/.config:rw \
             -v /etc/sudoers.d:/etc/sudoers.d:ro \
             --privileged \
             --env="QT_X11_NO_MITSHM=1" \
             nvidia/cudagl:10.0-devel-ubuntu18.04 \
-            bash -c "cd  /home/christoph/data/simulation/ && ./ManipulatorEnvironment_Linux.x86_64"
+            bash -c "cd  /home/christoph/simulation/ && $simulation_start"
 ```
 
 **Note**: The unity simulation program must be able to write in `~/.config`. If there are problems with e.g. the screen resolution, delete this folder before starting the simulation again.
 
 
 ## How to run
+First run `source ./settings` in every shell
+
 ### Running acrobot_unity, ManipulatorEnvironment and VNC
 - Preparation:
     - Build `agent` with the given build command above
 1. Start a new X11 instance on the server (if there isn't one already): 
 ```bash
-xinit `which bash` -- :3 vt2
+xinit `which bash` -- $display vt2
 ```
-2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1920x1080`
+2. Change its screen resolution if you want: `DISPLAY=$display xrandr --fb 1920x1080`
 3. Optional: Start the vnc server and connect to it with your PC
-    1. Start VNC server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
+    1. Start VNC server: `DISPLAY=$display x11vnc -nopw -forever -shared`
     2. On your PC: Establish SSH bridge to the VNC server: `ssh -N -T -L 5900:localhost:5900 user@remotehost &`
     3. On your PC: Start the vnc client: `vncviewer localhost:5900`
 4. Start `agent` with the corresponding `docker run` command above

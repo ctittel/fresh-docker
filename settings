@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Settings for fresh_docker
+
+# A custom docker network of type bridge
+# may not be the default docker "bridge" network
+# as that network has no name server
+export network="c_network"
+
+# The names of the docker containers used
+export name_agent="c_agent"
+export name_simulation="c_simulation"
+export name_bridge="c_ros_bridge"
+
+# Which GPU to use
+# Examples: '"device=0"' '"device=1,2"' "all"
+export gpus='"device=0"'
+
+# path to the directory with the code for the agent
+# if the agent creates files, it must be in the home directory
+# so the code can create files
+export agent_path="/home/christoph/data/agent/"
+
+# the code to start the agent when inside $agent_path
+export agent_start="python main.py"
+
+# path to the directory with the code for the simulation
+# if the simulation creates files, 
+# this must be in a location where you can create files
+export simulation_path="/home/christoph/data/simulation/"
+
+# the code to start the simulation when inside $simulation_path
+export simulation_start="./ManipulatorEnvironment_Linux.x86_64"
+
+# a display which either 
+# - doesn't currently have a X11 server yet
+# - has a server you can access
+export display=:3
