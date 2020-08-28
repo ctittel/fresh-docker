@@ -86,8 +86,9 @@ docker run  --rm -dit \
 **Note**: The unity simulation program must be able to write in `~/.config`. If there are problems with e.g. the screen resolution, delete this folder before starting the simulation again.
 
 ## How to run
-Before running any of the steps below you may need to customize and then source the environment variables of your bash shell in the `settings` file in this directory.
-Do this by running `source settings` when inside it.
+**Important:** Before running any of the steps below you may need to customize and then source the environment variables of your bash shell in the `settings` file in this directory. Do this by running `source settings` when inside it.
+
+**Important:** After running the commands below always disconnect your SSH connection gracefully, with `exit`. Otherwise the processes started below may also quit when you disconnect.
 
 ### Starting or finding a X11 display
 If graphical applications are launched in the Docker containers, there must be a Xorg server they can reach.
