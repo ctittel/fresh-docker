@@ -68,7 +68,7 @@ docker run  --rm -it \
             --net "$network" \
             --gpus "$gpus" \
             -u $(id -u $USER):$(id -g $USER) \
-            -e DISPLAY=$display \
+            -e DISPLAY \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v  /etc/group:/etc/group:ro \
             -v /etc/passwd:/etc/passwd:ro \
