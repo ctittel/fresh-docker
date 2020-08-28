@@ -19,7 +19,7 @@ export gpus='"device=0"'
 # path to the directory with the code for the agent
 # if the agent creates files, it must be in the home directory
 # so the code can create files
-export agent_path="/home/christoph/data/agent/"
+export agent_path="/home/$USER/data/agent/"
 
 # the code to start the agent when inside $agent_path
 export agent_start="python main.py"
@@ -27,7 +27,7 @@ export agent_start="python main.py"
 # path to the directory with the code for the simulation
 # if the simulation creates files, 
 # this must be in a location where you can create files
-export simulation_path="/home/christoph/data/simulation/"
+export simulation_path="/home/$USER/data/simulation/"
 
 # the code to start the simulation when inside $simulation_path
 export simulation_start="./ManipulatorEnvironment_Linux.x86_64"
@@ -35,4 +35,4 @@ export simulation_start="./ManipulatorEnvironment_Linux.x86_64"
 # a display which either 
 # - doesn't currently have a X11 server yet
 # - has a server you can access
-export display=:3
+export display=:4

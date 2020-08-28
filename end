@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd "$(dirname "$(realpath "$0")")"
+source settings
+
+docker container kill $name_agent
+docker container kill $name_simulation
+docker container kill $name_bridge 

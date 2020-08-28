@@ -3,14 +3,44 @@
 # this script may be called from somewhere else
 # make sure we are in the parent directory
 cd "$(dirname "$(realpath "$0")")"
-
-# source the settings
-echo Setting environment variables
 source settings
 
-echo attempting to start a x11 server at display $(display) &
-xinit `which bash` -- $(display) vt2 &
+# echo ======== attempting to start a x11 server at display $display ========
+# echo ======== will fail if the display is already running ========
+# xinit `which bash` -- $display vt2 &
 
-echo attempting to start x11vnc at display $(display)
-DISPLAY=$(display) x11vnc -nopw -forever -shared -quiet
+# sleep 4 
 
+# echo ======== attempting to start x11vnc at display $display ========
+# DISPLAY=$display x11vnc -nopw -forever -shared -quiet &
+
+echo ====== attempting
+export DISPLAY=$display
+xinit `which bash` -- $display vt2& sleep 5 && \
+x11vnc -nopw -forever -shared -quiet & sleep 1 && \
+xrandr --fb 1920x1200 && \
+docker run  --rm -dit \
+            --name "$name_agent" \
+            --net "$network" \
+            --gpus "$gpus" \
+            -v "$agent_path":/agent:rw \
+            -u $(id -u $USER):$(id -g $USER) \
+            ctonic/agent \
+            bash -c "cd agent && $agent_start" && sleep 1 &&\
+docker run  --rm -dit \
+            --name "$name_simulation" \
+            --net "$network" \
+            --gpus "$gpus" \
+            -u $(id -u $USER):$(id -g $USER) \
+            -e DISPLAY=$display \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+            -v  /etc/group:/etc/group:ro \
+            -v /etc/passwd:/etc/passwd:ro \
+            -v /etc/shadow:/etc/shadow:ro \
+            -v "$simulation_path":/home/$USER/simulation:rw \
+            -v /home/$USER/.config:/home/$USER/.config:rw \
+            -v /etc/sudoers.d:/etc/sudoers.d:ro \
+            --privileged \
+            --env="QT_X11_NO_MITSHM=1" \
+            nvidia/cudagl:10.0-devel-ubuntu18.04 \
+            bash -c "cd  /home/$USER/simulation/ && $simulation_start"

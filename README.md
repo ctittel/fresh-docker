@@ -56,7 +56,7 @@ docker run  --rm -it \
             --net "$network" \
             --gpus "$gpus" \
             -p 5900:5900 \
-            -v /home/christoph/data/agent:/agent:rw \
+            -v /home/$USER/data/agent:/agent:rw \
             ctonic/agent-vnc \
             bash -c "cd agent && python main.py"
 ```
@@ -99,7 +99,7 @@ docker run  --rm -it \
             --privileged \
             --env="QT_X11_NO_MITSHM=1" \
             nvidia/cudagl:10.0-devel-ubuntu18.04 \
-            bash -c "cd  /home/christoph/simulation/ && $simulation_start"
+            bash -c "cd  /home/$USER/simulation/ && $simulation_start"
 ```
 
 **Note**: The unity simulation program must be able to write in `~/.config`. If there are problems with e.g. the screen resolution, delete this folder before starting the simulation again.
@@ -122,6 +122,8 @@ xinit `which bash` -- $display vt2
 5. Start `simulation`:
     1. Set the `DISPLAY` variable in your current SSH shell so the simulation knows its X server: `export DISPLAY=:3`
     2. Start `simulation` with the corresponding `docker run` command above
+
+xinit `which bash` -- $display vt2& sleep 5 && x11vnc -nopw -forever -shared -quiet
 
 ### Running agent for training with OpenAI gym
 Execute the two commands given under `agent-vnc`.
