@@ -21,13 +21,15 @@ If you use other ports / names / settings, you have to substitute in the command
     - `simulation`: contains the unity application; the executable is directly below this (whole path to it: `data/simulation/ManipulatorEnvironment_Linux.x86_64`)
 
 ## Containers and Images
+Clone this repository on the server, cd into it with `cd fresh-docker` and run this command in every shell before running any of the commands 
+below to set the environment variables: `source settings`
+
 ### agent
 Contains NVIDIA drivers, tensorflow 1, torch and basically everything to do the training of OpenAi-Gym and the Unity simulation. 
 
 Building:
 ```bash
-docker build -t ctonic/agent \
-        https://github.com/ctonic/fresh-docker.git#:agent
+docker build -t ctonic/agent agent
 ```
 
 Running:
@@ -48,8 +50,7 @@ This is useful if you want to see the OpenAi window via vnc (for training and vi
 
 Building: 
 ```bash
-docker build -t ctonic/agent-vnc \
-        https://github.com/ctonic/fresh-docker.git#:agent-vnc
+docker build -t ctonic/agent-vnc agent-vnc
 ```
 
 Running:
@@ -70,14 +71,13 @@ Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using
 
 Building:
 ```bash
-docker build --tag ctonic/ros-bridge \
-https://github.com/ctonic/fresh-docker.git#:ros-bridge
+docker build --tag ctonic/ros-bridge ros-bridge
 ```
 
 Running: 
 ```bash
 docker run  --rm -it \
-            --name c_ros_bridge \
+            --name "$name_bridge" \
             --net $network \
             --gpus "$gpus" \
             -p 9090:9090 \
@@ -110,8 +110,6 @@ docker run  --rm -it \
 
 
 ## How to run
-First run `source ./settings` in every shell
-
 ### Running acrobot_unity, ManipulatorEnvironment and VNC
 - Preparation:
     - Build `agent` with the given build command above
