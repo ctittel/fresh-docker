@@ -30,7 +30,7 @@ docker build -t ctonic/agent agent
 
 Running:
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_agent" \
             --net "$network" \
             --gpus "$gpus" \
@@ -53,18 +53,17 @@ docker build --tag ctonic/ros-bridge ros-bridge
 
 Running: 
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_bridge" \
             --net $network \
             --gpus "$gpus" \
-            -p 9090:9090 \
             ctonic/ros-bridge
 ```
 
 ### Simulation
 Running:
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_simulation" \
             --net "$network" \
             --gpus "$gpus" \
