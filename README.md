@@ -96,15 +96,17 @@ docker run  --rm -it \
             -v  /etc/group:/etc/group:ro \
             -v /etc/passwd:/etc/passwd:ro \
             -v /etc/shadow:/etc/shadow:ro \
-            -v /home/christoph:/home/christoph \
+            -v /home/christoph/data/simulation:/home/christoph/data/simulation:rw \
+            -v /home/christoph/.config:/home/christoph/.config:rw \
             -v /etc/sudoers.d:/etc/sudoers.d:ro \
             --privileged \
             --env="QT_X11_NO_MITSHM=1" \
             --gpus '"device=0"' \
             nvidia/cudagl:10.0-devel-ubuntu18.04 \
-            bash -c "cd home/christoph/data/simulation && ./ManipulatorEnvironment_Linux.x86_64"
+            bash -c "cd  /home/christoph/data/simulation/ && ./ManipulatorEnvironment_Linux.x86_64"
 ```
 
+**Note**: The unity simulation program must be able to write in `~/.config`. If there are problems with e.g. the screen resolution, delete this folder before starting the simulation again.
 
 
 ## How to run
@@ -115,15 +117,15 @@ docker run  --rm -it \
 ```bash
 xinit `which bash` -- :3 vt2
 ```
-2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1600x900`
+2. Change its screen resolution if you want: `DISPLAY=:3 xrandr --fb 1920x1080`
 3. Optional: Start the vnc server and connect to it with your PC
     1. Start VNC server: `DISPLAY=:3 x11vnc -nopw -forever -shared`
     2. On your PC: Establish SSH bridge to the VNC server: `ssh -N -T -L 5900:localhost:5900 user@remotehost &`
     3. On your PC: Start the vnc client: `vncviewer localhost:5900`
-4. Start `simulation`:
+4. Start `agent` with the corresponding `docker run` command above
+5. Start `simulation`:
     1. Set the `DISPLAY` variable in your current SSH shell so the simulation knows its X server: `export DISPLAY=:3`
     2. Start `simulation` with the corresponding `docker run` command above
-5. Start `agent` with the corresponding `docker run` command above
 
 ### Running agent for training with OpenAI gym
 Execute the two commands given under `agent-vnc`.
