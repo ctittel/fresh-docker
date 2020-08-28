@@ -10,6 +10,7 @@
     - edit the file `/etc/X11/Xwrapper.config` to include the line `allowed_users=anybody`
         - this is required to be able to start a x11 server from the command line via SSH
     - clone this repository
+    - configure the environment variables in `settings` depending on your local setup
     - cd into this repository and run `chmod a+x install && ./install`
 - On your client:
     - install a vnc client, e.g. `tigervnc`

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# this script may be called from somewhere else
+# make sure we are in the parent directory
+cd "$(dirname "$(realpath "$0")")"
+
+# source the settings
+echo Setting environment variables
+source settings
+
+echo attempting to start a x11 server at display $(display) &
+xinit `which bash` -- $(display) vt2 &
+
+echo attempting to start x11vnc at display $(display)
+DISPLAY=$(display) x11vnc -nopw -forever -shared -quiet
+
