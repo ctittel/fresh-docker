@@ -42,6 +42,28 @@ docker run  --rm -dit \
             bash -c "cd agent && $agent_start"
 ```
 
+### agent-gui
+Modified `agent`, to use the NVIDIA drivers.
+
+Building:
+```bash
+docker build -t ctonic/agent-gui agent-gui
+```
+
+Running:
+```bash
+docker run  --rm -dit \
+            --name "$name_agent" \
+            --net "$network" \
+            --gpus "$gpus" \
+            -e DISPLAY \
+            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+            -v "$agent_path":/agent:rw \
+            -u $(id -u $USER):$(id -g $USER) \
+            ctonic/agent-gui \
+            bash -c "cd agent && $agent_start"
+```
+
 ### ros-bridge
 When training the Unity robot this must be run first.
 Contains a `roscore` instance and a ROS websocket bridge for `agent` (when using the `acrobot-unity` environment) and `simulation` to connect to.

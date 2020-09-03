@@ -1,0 +1,15 @@
+scikit_optimize
+sklearn
+gym
+gym[all]
+gym[box2d]
+stable_baselines
+pyglet==1.5.0
+cloudpickle==1.2.0
+Box2D
+roslibpy
+torch
+numpy>= 1.15.4
+matplotlib
+opencv-python
+zmq
