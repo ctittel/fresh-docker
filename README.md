@@ -30,7 +30,7 @@ docker build -t ctonic/agent agent
 
 Running:
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_agent" \
             --net "$network" \
             --gpus "$gpus" \
@@ -75,23 +75,22 @@ docker build --tag ctonic/ros-bridge ros-bridge
 
 Running: 
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_bridge" \
             --net $network \
             --gpus "$gpus" \
-            -p 9090:9090 \
             ctonic/ros-bridge
 ```
 
 ### Simulation
 Running:
 ```bash
-docker run  --rm -dit \
+docker run  --rm -it \
             --name "$name_simulation" \
             --net "$network" \
             --gpus "$gpus" \
             -u $(id -u $USER):$(id -g $USER) \
-            -e DISPLAY=$display \
+            -e DISPLAY \
             -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
             -v  /etc/group:/etc/group:ro \
             -v /etc/passwd:/etc/passwd:ro \
@@ -108,8 +107,9 @@ docker run  --rm -dit \
 **Note**: The unity simulation program must be able to write in `~/.config`. If there are problems with e.g. the screen resolution, delete this folder before starting the simulation again.
 
 ## How to run
-Before running any of the steps below you may need to customize and then source the environment variables of your bash shell in the `settings` file in this directory.
-Do this by running `source settings` when inside it.
+**Important:** Before running any of the steps below you may need to customize and then source the environment variables of your bash shell in the `settings` file in this directory. Do this by running `source settings` when inside it.
+
+**Important:** After running the commands below always disconnect your SSH connection gracefully, with `exit`. Otherwise the processes started below may also quit when you disconnect.
 
 ### Starting or finding a X11 display
 If graphical applications are launched in the Docker containers, there must be a Xorg server they can reach.
