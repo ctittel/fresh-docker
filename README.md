@@ -43,7 +43,8 @@ docker run  --rm -it \
 ```
 
 ### agent-gui
-Modified `agent`, to use the NVIDIA drivers.
+**Experimental**
+Modified `agent`, to use the NVIDIA OpenGl drivers and make it able to display windows in the given `$DISPLAY`.
 
 Building:
 ```bash
